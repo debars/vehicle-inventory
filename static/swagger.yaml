@@ -1,0 +1,150 @@
+openapi: 3.0.0
+info:
+  title: Vehicle API
+  description: API for managing vehicles
+  version: 1.0.0
+servers:
+  - url: http://localhost:8000
+paths:
+  /vehicles:
+    get:
+      summary: Get all vehicles
+      responses:
+        '200':
+          description: A list of vehicle representations
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+  /vehicle:
+    post:
+      summary: Add a new vehicle
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Vehicle'
+      responses:
+        '201':
+          description: Vehicle created
+          content:
+            application/json:
+              schema:
+                type: string
+        '400':
+          description: Vehicle with this VIN already exists
+  /vehicle/{vin}:
+    get:
+      summary: Get a vehicle by VIN
+      parameters:
+        - name: vin
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A single vehicle representation
+          content:
+            text/plain:
+              schema:
+                type: string
+        '404':
+          description: Vehicle not found
+    put:
+      summary: Update a vehicle by VIN
+      parameters:
+        - name: vin
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Vehicle'
+      responses:
+        '200':
+          description: Vehicle updated
+          content:
+            text/plain:
+              schema:
+                type: string
+        '404':
+          description: Vehicle not found
+    delete:
+      summary: Delete a vehicle by VIN
+      parameters:
+        - name: vin
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Vehicle deleted
+        '404':
+          description: Vehicle not found
+  /year/{year}:
+    get:
+      summary: Get vehicles by year
+      parameters:
+        - name: year
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: A list of vehicles from the specified year
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        '404':
+          description: No vehicles found for this year
+  /manufacturer/{manufacturer}:
+    get:
+      summary: Get vehicles by manufacturer
+      parameters:
+        - name: manufacturer
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A list of vehicles from the specified manufacturer
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        '404':
+          description: No vehicles found for this manufacturer
+components:
+  schemas:
+    Vehicle:
+      type: object
+      properties:
+        vin:
+          type: string
+        manufacturer:
+          type: string
+        model:
+          type: string
+        year:
+          type: integer
+        color:
+          type: string
+        extra:
+          type: string
+
