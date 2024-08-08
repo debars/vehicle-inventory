@@ -55,5 +55,5 @@ class VehicleManager:
 
     def populate_with_random_vehicles(self, count=50):
         for vehicle_data in generate_vehicles_list(count):
-            self.vehicles[vehicle_data['vin']] = Vehicle(vehicle_data)
+            self.vehicles[vehicle_data['vin']] = Vehicle(**vehicle_data)
 

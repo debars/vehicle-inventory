@@ -3,7 +3,7 @@
 import sys
 import argparse
 from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel
+from vehicle import Vehicle
 from vehicle_manager import VehicleManager
 from console import Console
 
@@ -12,13 +12,6 @@ app = FastAPI()
 
 # Utilize the vehicle manager to handle vehicle access.
 vehicle_manager = VehicleManager()
-
-class Vehicle(BaseModel):
-    name: str
-    manufacturer: str
-    model: str
-    year: int
-    color: str
 
 @app.get('/vehicles')
 def get_vehicles():
